@@ -1,2 +1,8 @@
-# yandex_prepa
-Preparing for an interview at Yandex
+# Preparing for an interview at Yandex
+
+## Data structures
+
+## Algorithms
+
+## Tests \[0/50\]
+
