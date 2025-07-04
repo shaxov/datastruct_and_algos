@@ -9,10 +9,10 @@
 
 ## Алгоритмы
 
-## Тренировочные задачи \[0/41\]
+## Тренировочные задачи \[1/41\]
 
 ### Хеш-таблицы / Множества / Словари
-- [ ] LeetCode 705 — Design HashSet
+- [x] [LeetCode 705 — Design HashSet](tests/leetcode_705.cpp)
 - [ ] LeetCode 380 — Insert Delete GetRandom O(1)
 - [ ] LeetCode 1429 — First Unique Number
 - [ ] LeetCode 930 — Binary Subarrays With Sum
