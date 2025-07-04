@@ -13,9 +13,9 @@ public:
 
     // explicit to avoid implicit conversion from int
     explicit DynamicArray(size_t n, const T& value = {}) 
-        : data_{std::make_unique<T[]>(n)},
-          sz_{n}, 
-          cap_{n}
+        : sz_{n}, 
+          cap_{n},
+          data_{std::make_unique<T[]>(n)}
     {
         std::fill_n(data_.get(), n, value);
     }
@@ -75,7 +75,6 @@ public:
     bool empty() const noexcept { return sz_ == 0; }
 
 private:
-
     void ensure_capacity(size_t new_cap)
     {
         if (new_cap < cap_) return;
@@ -85,9 +84,9 @@ private:
         data_.swap(tmp);
     }
 
-    std::unique_ptr<T[]> data_;
     size_t sz_;
     size_t cap_;
+    std::unique_ptr<T[]> data_;
 };
 
 template<typename T>
@@ -98,7 +97,6 @@ void print(DynamicArray<T>& array)
         std::cout << a << ", ";
     std::cout << "]\n";
 }
-
 
 int main()
 {   
