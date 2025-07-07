@@ -17,7 +17,7 @@
 - [ ] LeetCode 1429 — First Unique Number
 - [ ] LeetCode 930 — Binary Subarrays With Sum
 - [ ] LeetCode 1207 — Unique Number of Occurrences
-- [ ] Codeforces 1020B — Badge
+- [x] [Codeforces 1020B — Badge](tests/codeforges_1020B.cpp)
 - [ ] Codeforces 1084B — Анаграммы
 - [ ] Codeforces 1385C — Удаление префикса
 - [ ] Codeforces 1660D — Максимальная сумма подотрезка
