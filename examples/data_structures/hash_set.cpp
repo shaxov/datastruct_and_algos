@@ -26,11 +26,13 @@
  THE SOFTWARE.
  */
 
-#include <iostream>
 #include <list>
 #include <vector>
-#include <functional>
 #include <string>
+#include <iostream>
+#include <stdexcept>
+#include <functional>
+#include <type_traits>
 
 template<
     typename Key,
@@ -46,6 +48,12 @@ public:
            hasher_(hasher),
            equal_(equal)
     { }
+
+    HashSet(const HashSet& other) noexcept = default;
+    HashSet(HashSet&&) noexcept = default;
+
+    HashSet& operator=(const HashSet& other) noexcept = default;
+    HashSet& operator=(HashSet&&) noexcept = default;
     
     void add(const Key& key)
     {
@@ -117,5 +125,15 @@ int main()
     std::cout << hashset2.contains("wolrd") << std::endl;
     std::cout << hashset2.contains("?") << std::endl;
 
+    auto hashset3 = HashSet<int>(hashset);
+    std::cout << hashset3.contains(3) << std::endl;
+
+    auto hashset4 = HashSet<int>(std::move(hashset3));
+
+    hashset = hashset4;
+    std::cout << hashset4.contains(3) << std::endl;
+
+    hashset = std::move(hashset4);
+    // std::cout << hashset4.contains(3) << std::endl; // segmentation fault
     return 0;
 }
