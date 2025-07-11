@@ -11,7 +11,7 @@
 
 ## Алгоритмы
 
-- [Сортировка пзырьком](examples/algorithms/bubble_search.cpp)
+- [Сортировка пузырьком](examples/algorithms/bubble_search.cpp)
 
 ## Тренировочные задачи \[3/41\]
 
