@@ -5,8 +5,9 @@
 ## Структуры данных
 
 - [Динамический массив](examples/data_structures/dynamic_array.cpp)
-- [Хеш-таблица](examples/data_structures/hash_set.cpp)
 - [Односвязный список](examples/data_structures/singly_linked_list.cpp)
+- [Двусвязный список](examples/data_structures/singly_linked_list.cpp)
+- [Хеш-таблица](examples/data_structures/hash_set.cpp)
 
 ## Алгоритмы
 
