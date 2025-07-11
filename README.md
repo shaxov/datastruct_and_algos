@@ -12,6 +12,7 @@
 ## Алгоритмы
 
 - [Сортировка пузырьком](examples/algorithms/bubble_sort.cpp)
+- [Сортировка вставками](examples/algorithms/insertion_sort.cpp)
 
 ## Тренировочные задачи \[3/41\]
 
