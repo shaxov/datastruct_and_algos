@@ -38,22 +38,19 @@ class SinglyLinkedList
     {
         T value;
         std::unique_ptr<Node> next;
-        Node(const T& v, std::unique_ptr<Node> nx = nullptr) 
+        Node(T const& v, std::unique_ptr<Node> nx = nullptr) 
             : value{v}, next{std::move(nx)} 
             {}
     };
 
 public:
-    SinglyLinkedList() noexcept = default;
-    ~SinglyLinkedList() = default;
-
-    void push_front(const T& v)
+    void push_front(T const& v)
     {
         head_ = std::make_unique<Node>(v, std::move(head_));
-        ++sz;
+        ++sz_;
     }
 
-    void push_back(const T& v)
+    void push_back(T const& v)
     {
         auto new_node = std::make_unique<Node>(v);
         if (!head_)
@@ -67,7 +64,7 @@ public:
                 cur = cur->next.get();
             cur->next = std::move(new_node);
         }
-        ++sz;
+        ++sz_;
     }
 
     void pop_front()
@@ -75,26 +72,24 @@ public:
         if (!head_)
             throw std::out_of_range("list is empty");
         head_ = std::move(head_->next);
-        --sz;
+        --sz_;
     }
 
-    const Node* get_head() const { return head_.get(); }
+    T const& front() const { return head_->value; }
+    Node const* front_p() const { return head_.get(); }
 
-    size_t size() const { return sz; }
-
-    const T& front() const { return head_->value; }
-
+    size_t size() const { return sz_; }
     bool empty() const { return !head_; }
 
 private:
     std::unique_ptr<Node> head_;
-    size_t sz = 0;
+    size_t sz_ = 0;
 };
 
 template<typename T>
 void print(const SinglyLinkedList<T>& list)
 {
-    auto* cur = list.get_head();
+    auto* cur = list.front_p();
     std::cout << "[" << cur->value << ", ";
     while (cur->next)
     {
