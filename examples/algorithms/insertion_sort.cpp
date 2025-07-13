@@ -26,7 +26,7 @@
  THE SOFTWARE.
  */
 
-
+#include <vector>
 #include <ranges>
 #include <iostream>
 
