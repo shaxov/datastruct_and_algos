@@ -1,5 +1,5 @@
 /**
- * @file	examples/data_structures/doubly_linked_list.cpp
+ * @file	examples/data_structures/binary_heap.cpp
  * @date	Jul 2025
  * @author	Maksym Shpakovych
  */
