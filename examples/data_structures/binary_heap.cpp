@@ -40,9 +40,21 @@ class BinaryHeap
 {
 public:
     explicit BinaryHeap(Compare comp = {}) : comp_{comp} { }
-    BinaryHeap(std::initializer_list<T> const& list) {
-        for (auto l : list)
-            push_back(std::move(l));
+
+    BinaryHeap(std::initializer_list<T> const& list, Compare comp = {})
+        : BinaryHeap(list.begin(), list.end(), comp)
+    { }
+
+    template<std::random_access_iterator It>
+    BinaryHeap(It first, It last, Compare comp = {}) // heapify
+        : data_{first, last}, comp_{comp}
+    {
+        if (!data_.empty()) {
+            for (size_t i = parent(last_index()); ; --i) {
+                sift_down(i);
+                if (i == 0) break;
+            }  
+        }
     }
 
     void push_back(T const& value) { data_.push_back(value); sift_up(last_index()); }
@@ -99,7 +111,6 @@ private:
 
     std::vector<T> data_;
     Compare comp_;
-    size_t sz_ = 0;
 };
 
 
@@ -116,6 +127,20 @@ int main()
     while (!heap2.empty()) {
         std::cout << heap2.top() << " ";
         heap2.pop();
+    }
+    std::cout << std::endl;
+
+    auto heap3 = BinaryHeap({10, 7, 1, 5, -9, 4}, std::greater<>{});
+    while (!heap3.empty()) {
+        std::cout << heap3.top() << " ";
+        heap3.pop();
+    }
+    std::cout << std::endl;
+
+    auto heap4 = BinaryHeap<int>{10, 7, 1, 5, -9, 4};
+    while (!heap4.empty()) {
+        std::cout << heap4.top() << " ";
+        heap4.pop();
     }
     std::cout << std::endl;
     return 0;
