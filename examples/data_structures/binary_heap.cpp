@@ -47,38 +47,40 @@ public:
 
     template<std::random_access_iterator It>
     BinaryHeap(It first, It last, Compare comp = {}) // heapify
-        : data_{first, last}, comp_{comp}
+        : data_{first, last}, comp_{comp}, sz_{static_cast<size_t>(last - first)}
     {
-        if (!data_.empty()) {
+        if (!empty()) {
             for (size_t i = parent(last_index()); ; --i) {
                 sift_down(i);
                 if (i == 0) break;
-            }  
+            }
         }
     }
 
-    void push_back(T const& value) { data_.push_back(value); sift_up(last_index()); }
-    void push_back(T&& value) { data_.push_back(std::move(value)); sift_up(last_index()); }
+    void push_back(T const& value) { data_.push_back(value); ++sz_; sift_up(last_index()); }
+    void push_back(T&& value) { data_.push_back(std::move(value)); ++sz_; sift_up(last_index()); }
 
-    void pop() {
+    void pop(bool keep_tail = false) {
         require_not_empty();
-        data_.front() = std::move(data_.back());
-        data_.pop_back();
-        if (!data_.empty()) sift_down(0);
+        std::swap(data_[0], data_[last_index()]);
+        if (!keep_tail)
+            data_.pop_back();
+        --sz_;
+        if (!empty()) sift_down(0);
     }
 
-    size_t size() const noexcept { return data_.size(); }
-    bool empty() const noexcept { return data_.empty(); }
-    T const& top() const { require_not_empty(); return data_.front(); }
+    size_t size() const noexcept { return sz_; }
+    bool empty() const noexcept { return sz_ == 0; }
+    T const& top() const { require_not_empty(); return data_[0]; }
 
 private:
-    size_t last_index() const noexcept { return data_.size() - 1; }
+    size_t last_index() const noexcept { return sz_ - 1; }
     static constexpr size_t parent(size_t i) noexcept { return (i - 1) / 2; }
     static constexpr size_t left(size_t i) noexcept { return 2 * i + 1; }
     static constexpr size_t right(size_t i) noexcept { return 2 * i + 2; }
 
     void require_not_empty() const {
-        if (data_.empty())
+        if (empty())
             throw std::out_of_range("heap is empty");
     }
 
@@ -96,11 +98,11 @@ private:
     }
 
     void sift_down(size_t i) {
-        while (left(i) < data_.size()) {
+        while (left(i) < size()) {
             size_t best = left(i);
             size_t r = right(i);
 
-            if (right(i) < data_.size() && better(r, best))
+            if (right(i) < size() && better(r, best))
                 best = r;
 
             if (better(i, best)) break;
@@ -111,6 +113,7 @@ private:
 
     std::vector<T> data_;
     Compare comp_;
+    size_t sz_ = 0;
 };
 
 
