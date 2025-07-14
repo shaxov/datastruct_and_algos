@@ -81,6 +81,31 @@ public:
         }
     }
 
+    struct const_iterator 
+    {
+        Node const* cur;
+        using value_type = T;
+        using reference = T const&;
+        using pointer = T const*;
+        using difference_type = ptrdiff_t;
+        using iterator_category = std::bidirectional_iterator_tag;
+
+        reference operator*() const { return cur->value; }
+        pointer operator->() const {return &cur->value; }
+
+        const_iterator& operator++() { cur = cur->next.get(); return *this; }
+        const_iterator operator++(int) { auto tmp = *this; ++(*this); return tmp; }
+
+        const_iterator& operator--() { cur = cur->prev.get(); return *this; }
+        const_iterator operator--(int) { auto tmp = *this; --(*this); return tmp; }
+
+        friend bool operator==(const_iterator const& a, const_iterator const& b) { return a.cur == b.cur; }
+        friend bool operator!=(const_iterator const& a, const_iterator const& b) { return !(a == b); }
+    };
+
+    const_iterator begin() { return { head_.get() }; }
+    const_iterator end() { return { nullptr }; } 
+
 private:
 
     void requires_not_empty() {
@@ -132,6 +157,9 @@ int main()
 
     dll.push_back(4);
     dll.push_back(8);
+
+    for (auto&& a : dll) std::cout << a << ' ';
+    std::cout << std::endl;
 
     dll.pop_front();
 
