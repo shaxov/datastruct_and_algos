@@ -13,17 +13,17 @@ void worker(size_t iterations, size_t thread_id)
         {
             std::lock_guard lock(mtx);
             ++cnt;
+            std::cout << "Thread " << thread_id << " increments" << std::endl;
         }
-        if (i % (iterations / 10) == 0)
-            std::this_thread::yield();
+        std::this_thread::yield();
     }
     std::cout << "Thread " << thread_id << " finished" << std::endl;
 }
 
 int main()
 {
-    constexpr size_t num_threads = 8;
-    constexpr size_t iter_per_thread = 100000;
+    constexpr size_t num_threads = 4;
+    constexpr size_t iter_per_thread = 10;
 
     std::vector<std::thread> pool;
     pool.reserve(num_threads);
